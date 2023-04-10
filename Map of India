@@ -1,0 +1,21 @@
+import geopandas as gpd
+import matplotlib.pyplot as plt
+
+# Read in India shapefile
+india = gpd.read_file(r'C:\Users\DIVYA\Downloads\India_Country_Boundary.shp')
+
+# Read in state capitals data
+capitals = gpd.read_file(r'C:\Users\DIVYA\Downloads\Data_lab3.csv')
+
+# Merge state capitals data with India shapefile
+india_capitals = india.merge(capitals, how='left', left_on='ST_NM', right_on='State')
+
+# Convert population column to numeric type
+india_capitals['Population'] = pd.to_numeric(india_capitals['Population'], errors='coerce')
+
+# Plot India map with state capitals as bubbles
+fig, ax = plt.subplots(figsize=(12, 8))
+india_capitals.plot(ax=ax, column='Population', legend=True, legend_kwds={'label': 'Population'}, cmap='YlOrRd', edgecolor='black', alpha=0.5, markersize=india_capitals['Population']/50000)
+ax.set_title('Population of State Capitals in India', fontsize=16)
+ax.set_axis_off()
+plt.show()
