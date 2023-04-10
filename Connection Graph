@@ -1,0 +1,24 @@
+import geopandas as gpd
+import pandas as pd
+import matplotlib.pyplot as plt
+
+# Read the Flightschedule.csv file into a pandas dataframe
+flights_df = pd.read_csv("C:/Users/DIVYA/Downloads/Flightschedule.csv")
+
+# Create a geodataframe of the Indian states using a shapefile
+states_shapefile = "C:/Users/DIVYA/Downloads/India_Country_Boundary.shp"
+states_gdf = gpd.read_file(states_shapefile)
+
+# Filter the flights dataframe to only include Go Air domestic flights in India
+goair_df = flights_df[(flights_df['AIRLINE']=='Go Air') & (flights_df['COUNTRY']=='India')]
+
+# Merge the flights dataframe with the states geodataframe based on the state name
+goair_gdf = states_gdf.merge(goair_df, how='right', left_on='ST_NM', right_on='ORIGIN')
+
+# Plot the connection graph of Go Air domestic flights in India
+fig, ax = plt.subplots(figsize=(10, 8))
+goair_gdf.plot(ax=ax, column='AIRLINE', cmap='Set2', linewidth=0.5, edgecolor='gray', legend=True)
+ax.set_title('Go Air Domestic Flights in India', fontsize=16)
+ax.set_axis_off()
+plt.show()
+
