@@ -13,3 +13,5 @@ The alpha parameter sets the transparency level of the bubbles to 50%.
 The markersize parameter is set to the population divided by 50,000 to scale the size of the bubbles based on population.
 Finally, the set_axis_off() method is called to remove the axis labels and ticks from the plot.
 
+In the connection graph code reads in the "Flightschedule.csv" file into a pandas dataframe, creates a geodataframe of the Indian states using a shapefile, filters the flights dataframe to only include Go Air domestic flights in India, merges the flights dataframe with the states geodataframe based on the state name, and finally plots the connection graph of Go Air domestic flights in India using geopandas.
+
